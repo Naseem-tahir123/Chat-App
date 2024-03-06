@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "262299840928",
+    "project_id": "apna-chat-app-d3a40",
+    "storage_bucket": "apna-chat-app-d3a40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262299840928:android:c211f98de4f6dc118f34c5",
+        "android_client_info": {
+          "package_name": "com.example.chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALJC6sFo-youNtH0PqOxGIUscvVC_SdmU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
