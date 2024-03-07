@@ -300,6 +300,7 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: EdgeInsets.only(top: 1, left: 10, right: 5, bottom: 2),
             shape: CircleBorder(),
             onPressed: () {
+              ApIs.createChat(widget.user);
               if (_textController.text.isNotEmpty) {
                 if (_list.isEmpty) {
                   ApIs.sendFirstMessage(

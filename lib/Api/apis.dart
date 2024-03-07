@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:chat_app/models/chat_model.dart';
 import 'package:chat_app/models/message.dart';
 import 'package:chat_app/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -262,12 +263,44 @@ class ApIs {
         .snapshots();
   }
 
+  // create chat room
+  static Future<ChatModel?> createChat(UserModel chatUser) async {
+    ChatModel? chats;
+    QuerySnapshot snapshot = await firestore
+        .collection("chats")
+        .where("participants.${chatUser.uId}", isEqualTo: true)
+        .get();
+
+    if (snapshot.docs.length > 0) {
+      // fetch the existing one
+      var docData = snapshot.docs[0].data();
+      ChatModel existingChat =
+          ChatModel.fromMap(docData as Map<String, dynamic>);
+      chats = existingChat;
+    } else {
+      ChatModel newChats = ChatModel(
+        chatroomid: getConversationId(chatUser.uId),
+        lastMessage: "",
+        participants: {
+          user.uid: true,
+          chatUser.uId: true,
+        },
+      );
+      await firestore
+          .collection("chats")
+          .doc(getConversationId(chatUser.uId))
+          .set(newChats.toMap());
+
+      chats = newChats;
+    }
+    return chats;
+  }
+
   // for sending message
   static Future<void> sendMessage(
       String msg, UserModel chatUser, Type type) async {
     // message sending time (also used as id)
     final time = DateTime.now().millisecondsSinceEpoch.toString();
-
     // message to send
     final Message message = Message(
         msg: msg,
